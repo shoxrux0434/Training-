@@ -32,8 +32,10 @@ button:active{opacity:.6}
 .ex{font-size:24px;font-weight:700;margin:6px 0 12px}
 .set{font-size:40px;font-weight:800}
 .tip{margin-top:10px;color:#bbb;font-size:15px}
+.wu{margin-top:12px;padding:10px 12px;background:#2a2410;color:#f2c94c;border-radius:10px;font-size:15px}
 .w{display:flex;align-items:center;gap:10px;margin-top:14px}
 .w input{font:inherit;font-size:20px;width:110px;padding:10px;border-radius:10px;border:0;background:#2a2a2a;color:#fff;text-align:center}
+.hint{margin-top:8px;color:#777;font-size:13px}
 #rest{position:fixed;inset:0;background:#111;display:none;flex-direction:column;justify-content:center;align-items:center;padding:24px;text-align:center}
 #rest.on{display:flex}
 #rest.over{animation:fl 1s infinite}
@@ -46,33 +48,35 @@ button:active{opacity:.6}
 <div id="app"></div>
 <div id="rest"></div>
 <script>
-// rest: секунды отдыха после подхода
+// s: подходы, r: повторы, rir: запас до отказа, rest: отдых в секундах, wu: разминка
+const W2='50% веса × 10, затем 75% × 5 — не считаются';
+const W1='1 подход: 60% веса × 6 — не считается';
 const PLAN={
 A:{name:'День A',ex:[
-{n:'Присед в Смите',s:3,r:'6-10',rir:'1-2',rest:150,t:'Стопы чуть впереди, бёдра ниже параллели, без отбива'},
-{n:'Жим гантелей на наклонной 30°',s:3,r:'8-12',rir:'1-2',rest:150,t:'Внизу гантели у груди, пауза 1 с в растяжении'},
-{n:'Тяга верхнего блока, нейтральный хват',s:3,r:'8-12',rir:'1-2',rest:120,t:'Наверху полностью выпрями руки'},
-{n:'Сгибание ног сидя',s:3,r:'10-15',rir:'0-1',rest:90,t:'Корпус чуть вперёд — сильнее растяжение'},
-{n:'Разведения гантелей в стороны',s:3,r:'12-20',rir:'0-1',rest:75,t:'Без раскачки, до уровня плеч'},
-{n:'Разгибание из-за головы на кроссовере',s:3,r:'10-15',rir:'0-1',rest:90,t:'Спиной к блоку, локти вверх, глубоко вниз'},
-{n:'Икры на платформе жима ногами',s:2,r:'10-15',rir:'0-1',rest:75,t:'Пауза 2 с в нижней точке'}]},
+{n:'Присед в Смите',s:4,r:8,rir:'1-2',rest:150,wu:W2,t:'Стопы чуть впереди, бёдра ниже параллели, без отбива'},
+{n:'Жим гантелей на наклонной 30°',s:4,r:10,rir:'1-2',rest:150,wu:W1,t:'Внизу гантели у груди, пауза 1 с в растяжении'},
+{n:'Тяга верхнего блока, нейтральный хват',s:3,r:10,rir:'1-2',rest:120,t:'Наверху полностью выпрями руки'},
+{n:'Сгибание ног сидя',s:3,r:12,rir:'0-1',rest:90,t:'Корпус чуть вперёд — сильнее растяжение'},
+{n:'Разведения гантелей в стороны',s:3,r:15,rir:'0-1',rest:75,t:'Без раскачки, до уровня плеч'},
+{n:'Разгибание из-за головы на кроссовере',s:3,r:12,rir:'0-1',rest:90,t:'Спиной к блоку, локти вверх, глубоко вниз'},
+{n:'Икры на платформе жима ногами',s:3,r:12,rir:'0-1',rest:75,t:'Пауза 2 с в нижней точке'}]},
 B:{name:'День B',ex:[
-{n:'Румынская тяга со штангой',s:3,r:'6-10',rir:'2',rest:180,t:'Таз назад, спина ровная, до натяжения задней поверхности бедра'},
-{n:'Жим штанги лёжа',s:3,r:'6-10',rir:'1-2',rest:180,t:'Касание груди без отбива, лопатки сведены'},
-{n:'Горизонтальная тяга к поясу',s:3,r:'8-12',rir:'1-2',rest:120,t:'Вперёд — лопатки расходятся, назад — сводятся'},
-{n:'Разгибание ног, спинка откинута',s:3,r:'10-15',rir:'0-1',rest:90,t:'Нижняя половина амплитуды — самая важная'},
-{n:'Сгибание рук на наклонной скамье',s:3,r:'8-12',rir:'0-1',rest:90,t:'Руки свисают позади корпуса'},
-{n:'Разведения гантелей в стороны',s:3,r:'12-20',rir:'0-1',rest:75,t:'Без раскачки, до уровня плеч'},
-{n:'Скручивания на скамье',s:3,r:'10-15',rir:'1',rest:60,t:'Медленно вниз, шею не дёргать'}]},
+{n:'Румынская тяга со штангой',s:4,r:8,rir:'2',rest:180,wu:W2,t:'Таз назад, спина ровная, до натяжения задней поверхности бедра'},
+{n:'Жим штанги лёжа',s:4,r:8,rir:'1-2',rest:180,wu:W2,t:'Касание груди без отбива, лопатки сведены'},
+{n:'Горизонтальная тяга к поясу',s:3,r:10,rir:'1-2',rest:120,t:'Вперёд — лопатки расходятся, назад — сводятся'},
+{n:'Разгибание ног, спинка откинута',s:3,r:12,rir:'0-1',rest:90,t:'Нижняя половина амплитуды — самая важная'},
+{n:'Сгибание рук на наклонной скамье',s:3,r:10,rir:'0-1',rest:90,t:'Руки свисают позади корпуса'},
+{n:'Разведения гантелей в стороны',s:3,r:15,rir:'0-1',rest:75,t:'Без раскачки, до уровня плеч'},
+{n:'Скручивания на скамье',s:3,r:15,rir:'1',rest:60,t:'Медленно вниз, шею не дёргать'}]},
 C:{name:'День C',ex:[
-{n:'Жим платформы ногами',s:3,r:'8-12',rir:'1-2',rest:150,t:'Глубоко, таз не отрывается от спинки'},
-{n:'Брусья с наклоном вперёд',s:3,r:'6-12',rir:'1-2',rest:150,t:'Болят плечи — замени жимом в хаммере'},
-{n:'Подтягивания / тяга блока узким хватом',s:3,r:'6-10',rir:'1-2',rest:150,t:'Внизу полный вис'},
-{n:'Хаммер: тяга от груди',s:3,r:'8-12',rir:'1-2',rest:120,t:'Пауза 1 с в сжатии, медленно вперёд'},
-{n:'Бабочка',s:2,r:'12-15',rir:'0-1',rest:75,t:'Широко раскрываться, пауза в растяжении'},
-{n:'Сгибание ног сидя',s:2,r:'10-15',rir:'0-1',rest:90,t:'Корпус чуть вперёд'},
-{n:'Обратная бабочка',s:2,r:'12-20',rir:'0-1',rest:60,t:'Руки почти прямые, без рывка'},
-{n:'Бицепс-машина',s:2,r:'10-15',rir:'0-1',rest:60,t:'Можно пропустить, если нет времени'}]}
+{n:'Жим платформы ногами',s:4,r:10,rir:'1-2',rest:150,wu:W2,t:'Глубоко, таз не отрывается от спинки'},
+{n:'Брусья с наклоном вперёд',s:4,r:8,rir:'1-2',rest:150,wu:'1 подход: 5 повторов без усилия — не считается',t:'Не выходит 8 или болят плечи — жим в хаммере'},
+{n:'Подтягивания / тяга блока узким хватом',s:3,r:8,rir:'1-2',rest:150,t:'Внизу полный вис'},
+{n:'Хаммер: тяга от груди',s:3,r:10,rir:'1-2',rest:120,t:'Пауза 1 с в сжатии, медленно вперёд'},
+{n:'Бабочка',s:3,r:12,rir:'0-1',rest:75,t:'Широко раскрываться, пауза в растяжении'},
+{n:'Сгибание ног сидя',s:3,r:12,rir:'0-1',rest:90,t:'Корпус чуть вперёд'},
+{n:'Обратная бабочка',s:3,r:15,rir:'0-1',rest:60,t:'Руки почти прямые, без рывка'},
+{n:'Бицепс-машина',s:3,r:12,rir:'0-1',rest:60,t:'По желанию: нет времени — жми «Завершить»'}]}
 };
 
 const $=id=>document.getElementById(id);
@@ -82,14 +86,12 @@ const save=()=>ls.set('state',S);
 const fmt=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
 const dt=iso=>new Date(iso).toLocaleDateString('ru-RU',{day:'numeric',month:'short'});
 
-// звук
 let ac;
 function unlock(){try{if(navigator.audioSession)navigator.audioSession.type='playback';if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume()}catch(e){}}
 document.addEventListener('touchend',unlock,{passive:true});
 document.addEventListener('click',unlock);
 function beep(){if(!ac)return;[0,.35,.7].forEach(t=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;o.connect(g);g.connect(ac.destination);const s=ac.currentTime+t;g.gain.setValueAtTime(.0001,s);g.gain.exponentialRampToValueAtTime(.7,s+.02);g.gain.exponentialRampToValueAtTime(.0001,s+.28);o.start(s);o.stop(s+.3)})}
 
-// экран не гаснет
 let wl=null;
 async function keepAwake(){try{if('wakeLock' in navigator&&S&&!wl){wl=await navigator.wakeLock.request('screen');wl.addEventListener('release',()=>{wl=null})}}catch(e){}}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){keepAwake();tick()}});
@@ -115,7 +117,12 @@ function start(d){
   S={day:d,i:0,done:PLAN[d].ex.map(()=>0),t0:Date.now(),restEnd:null,beeped:false,label:''};
   save();openW();
 }
-function openW(){keepAwake();render();tick()}
+function openW(){
+  const P=PLAN[S.day];
+  if(S.done.length!==P.ex.length)S.done=P.ex.map((e,k)=>Math.min(S.done[k]||0,e.s));
+  if(S.i>=P.ex.length)S.i=0;
+  keepAwake();render();tick();
+}
 
 function render(){
   const P=PLAN[S.day],e=P.ex[S.i],dn=S.done[S.i],w=ls.get('w:'+e.n,'');
@@ -123,8 +130,11 @@ function render(){
   html+='<div class="dots">'+P.ex.map((x,k)=>`<button class="dot ${S.done[k]>=x.s?'done':''} ${k===S.i?'cur':''}" onclick="go(${k})">${k+1}</button>`).join('')+'</div>';
   html+=`<div class="card"><div class="muted">${P.name} · упражнение ${S.i+1} из ${P.ex.length}</div><div class="ex">${e.n}</div>`;
   html+=dn>=e.s?'<div class="set" style="color:#4caf50">Готово ✓</div>':`<div class="set">Подход ${dn+1} из ${e.s}</div>`;
-  html+=`<div style="margin-top:6px">Повторы <b>${e.r}</b> · в запасе <b>${e.rir}</b> · отдых ${fmt(e.rest)}</div><div class="tip">${e.t}</div>`;
-  html+=`<div class="w"><span class="muted">Рабочий вес, кг</span><input type="number" inputmode="decimal" value="${w}" onchange="saveW(this.value)"></div></div>`;
+  html+=`<div style="margin-top:6px;font-size:19px">Повторов: <b>${e.r}</b> · запас <b>${e.rir}</b> · отдых ${fmt(e.rest)}</div>`;
+  if(e.wu&&dn===0)html+=`<div class="wu">Разминка: ${e.wu}</div>`;
+  html+=`<div class="tip">${e.t}</div>`;
+  html+=`<div class="w"><span class="muted">Рабочий вес, кг</span><input type="number" inputmode="decimal" value="${w}" onchange="saveW(this.value)"></div>`;
+  html+='<div class="hint">Все подходы — с одним весом. Сделал все повторы с запасом — в следующий раз добавь вес.</div></div>';
   html+=dn>=e.s?'<button class="primary" onclick="nextEx()">Следующее упражнение</button>':'<button class="primary" onclick="setDone()">Подход выполнен ✓</button>';
   html+='<div class="row" style="margin-top:10px"><button onclick="go(S.i-1)">‹ Назад</button><button onclick="go(S.i+1)">Вперёд ›</button></div>';
   $('app').innerHTML=html;tick();
