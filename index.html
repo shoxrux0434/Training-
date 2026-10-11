@@ -12,44 +12,57 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{background:#111;color:#eee;font:17px -apple-system,system-ui,sans-serif;padding:calc(env(safe-area-inset-top) + 12px) 16px calc(env(safe-area-inset-bottom) + 16px);min-height:100vh;-webkit-user-select:none;user-select:none}
+body.wmode{height:100vh;height:100dvh;min-height:0;overflow:hidden;padding:calc(env(safe-area-inset-top) + 6px) 14px calc(env(safe-area-inset-bottom) + 10px)}
+body.wmode #app{height:100%}
 h1{font-size:28px;margin:8px 0 14px}
 h2{font-size:14px;color:#888;font-weight:600;margin:22px 0 8px;text-transform:uppercase}
 button{font:inherit;color:inherit;border:0;border-radius:14px;background:#262626;padding:14px;width:100%;touch-action:manipulation}
-button:active{opacity:.6}
+button:active,.tb:active{opacity:.6}
 .primary{background:#2f80ed;color:#fff;font-weight:700;font-size:20px;padding:20px}
 .day{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;text-align:left}
 .day.next{outline:2px solid #2f80ed}
 .muted{color:#888;font-size:14px}
 .row{display:flex;gap:10px}
 .row button{flex:1}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.top button{width:auto;padding:8px 14px;font-size:15px}
-.dots{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.dot{width:auto;min-width:40px;padding:8px 0;font-size:15px;border-radius:10px}
-.dot.done{background:#1f6f43}
-.dot.cur{outline:2px solid #2f80ed}
 .card{background:#1c1c1c;border-radius:18px;padding:18px;margin-bottom:14px}
 .ex{font-size:24px;font-weight:700;margin:6px 0 12px}
-.set{font-size:40px;font-weight:800}
-.tip{margin-top:10px;color:#bbb;font-size:15px}
-.wu{margin-top:12px;padding:10px 12px;background:#2a2410;color:#f2c94c;border-radius:10px;font-size:15px}
-.fail{margin-top:12px;padding:10px 12px;background:#3a1d17;color:#ff9b85;border-radius:10px;font-size:15px}
-.fbk{margin-top:12px;padding:10px 12px;background:#14263a;color:#8cc4ff;border-radius:10px;font-size:15px}
-.w{display:flex;align-items:center;gap:10px;margin-top:14px}
-.w input{font:inherit;font-size:20px;width:110px;padding:10px;border-radius:10px;border:0;background:#2a2a2a;color:#fff;text-align:center}
-.hint{margin-top:8px;color:#777;font-size:13px}
-.anim{background:#161616;border-radius:14px;padding:8px 8px 10px;margin-bottom:12px;text-align:center}
-.anim svg{width:100%;height:210px;display:block}
-.ph{font-size:17px;font-weight:700;color:#f2c94c;min-height:22px;margin-top:2px}
-.cues{font-size:13px;color:#999;margin-top:4px}
-.small{display:inline-block;width:auto;margin-top:8px;padding:6px 12px;font-size:13px;border-radius:10px;background:#262626;color:#aaa}
-.vid{display:block;text-align:center;margin-top:12px;padding:12px;border-radius:12px;background:#262626;color:#eee;text-decoration:none;font-size:16px}
+.hist{font-size:15px;color:#aaa;line-height:1.8}
+.wk{display:flex;flex-direction:column;height:100%;gap:8px}
+.top{display:flex;justify-content:space-between;align-items:center}
+.top button{width:auto;padding:7px 12px;font-size:14px;border-radius:10px}
+.dots{display:flex;gap:5px;flex-wrap:nowrap}
+.dot{width:auto;min-width:34px;flex:1;padding:6px 0;font-size:14px;border-radius:9px}
+.dot.done{background:#1f6f43}
+.dot.cur{outline:2px solid #2f80ed}
+.title{font-size:21px;font-weight:700;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.anim{flex:1;min-height:0;display:flex;flex-direction:column;background:#161616;border-radius:14px;padding:6px 8px 8px;text-align:center}
+.anim svg{flex:1;min-height:0;width:100%;display:block}
+.ph{font-size:16px;font-weight:700;color:#f2c94c;min-height:20px}
+.cues{font-size:12px;color:#999;margin-top:2px}
+.tipline{font-size:12px;color:#777;margin-top:2px}
+.tipbig{flex:1;display:flex;align-items:center;justify-content:center;font-size:18px;color:#ccc;padding:10px;line-height:1.4}
+.info{display:flex;justify-content:space-between;align-items:center;background:#1c1c1c;border-radius:14px;padding:8px 14px}
+.set{font-size:30px;font-weight:800}
+.meta{text-align:right;display:flex;flex-direction:column}
+.meta b{font-size:19px}
+.meta span{font-size:13px;color:#999}
+.note{padding:8px 12px;border-radius:10px;font-size:14px;line-height:1.3}
+.wu{background:#2a2410;color:#f2c94c}
+.fail{background:#3a1d17;color:#ff9b85}
+.fbk{background:#14263a;color:#8cc4ff}
+.tools{display:flex;gap:8px;align-items:center}
+.wt{display:flex;align-items:center;gap:4px;background:#262626;border-radius:12px;padding:0 10px;height:44px;flex:1;min-width:0}
+.wt input{font:inherit;font-size:18px;width:100%;min-width:0;border:0;background:transparent;color:#fff;text-align:center;height:44px;outline:none}
+.wt span{color:#888;font-size:14px}
+.tb{display:flex;align-items:center;justify-content:center;height:44px;padding:0 12px;border-radius:12px;background:#262626;color:#eee;text-decoration:none;font-size:15px;width:auto;flex:none}
+.act{display:flex;gap:8px}
+.act .nav{width:54px;flex:none;font-size:26px;padding:0}
+.act .primary{flex:1;padding:18px 8px}
 #rest{position:fixed;inset:0;background:#111;display:none;flex-direction:column;justify-content:center;align-items:center;padding:24px;text-align:center}
 #rest.on{display:flex}
 #rest.over{animation:fl 1s infinite}
 @keyframes fl{0%,100%{background:#1f6f43}50%{background:#2e9b5f}}
 .clock{font-size:96px;font-weight:800;font-variant-numeric:tabular-nums;margin:10px 0}
-.hist{font-size:15px;color:#aaa;line-height:1.8}
 </style>
 </head>
 <body>
@@ -329,6 +342,7 @@ const FB={1:'В прошлый раз было легко — добавь 5–1
 function nextDay(){const h=ls.get('hist',[]);return h.length?{A:'B',B:'C',C:'A'}[h[h.length-1].day]:'A'}
 
 function home(){
+  document.body.classList.remove('wmode');
   const h=ls.get('hist',[]),nd=nextDay();
   const last=d=>{for(let i=h.length-1;i>=0;i--)if(h[i].day===d)return h[i].date;return null};
   let html='<h1>Тренировка</h1>';
@@ -355,27 +369,25 @@ function openW(){
 }
 
 function render(){
-  const P=PLAN[S.day],e=P.ex[S.i],dn=S.done[S.i],w=ls.get('w:'+e.n,''),A=ANIM[e.n],fb=ls.get('fb:'+e.n,null);
+  document.body.classList.add('wmode');
+  const P=PLAN[S.day],e=P.ex[S.i],dn=S.done[S.i],w=ls.get('w:'+e.n,''),A=ANIM[e.n],fb=ls.get('fb:'+e.n,null),hid=ls.get('hideAnim',false);
   const key=S.day+S.i;if(key!==animKey){animKey=key;animT0=performance.now()}
-  let html=`<div class="top"><button onclick="home()">‹ Меню</button><span class="muted" id="el"></span><button onclick="finish(false)">Завершить</button></div>`;
-  html+='<div class="dots">'+P.ex.map((x,k)=>`<button class="dot ${S.done[k]>=x.s?'done':''} ${k===S.i?'cur':''}" onclick="go(${k})">${k+1}</button>`).join('')+'</div>';
-  html+=`<div class="card"><div class="muted">${P.name} · упражнение ${S.i+1} из ${P.ex.length}</div><div class="ex">${e.n}</div>`;
-  if(A){
-    if(ls.get('hideAnim',false))html+='<button class="small" style="margin:0 0 12px" onclick="toggleAnim()">Показать технику</button>';
-    else html+=`<div class="anim"><svg id="animg" viewBox="80 18 220 252"></svg><div class="ph" id="animtxt"></div><div class="cues">${A.cues}</div><div class="cues" style="color:#666">оранжевый — рабочие мышцы · тени — крайние точки</div><button class="small" onclick="toggleAnim()">Скрыть</button></div>`;
-  }
-  html+=dn>=e.s?'<div class="set" style="color:#4caf50">Готово ✓</div>':`<div class="set">Подход ${dn+1} из ${e.s}</div>`;
-  html+=`<div style="margin-top:6px;font-size:19px">Повторов: <b>${e.r}</b> · запас <b>${e.rir}</b> · отдых ${fmt(e.rest)}</div>`;
-  if(e.wu&&dn===0)html+=`<div class="wu">Разминка: ${e.wu}</div>`;
-  if(dn===e.s-1)html+=e.f?'<div class="fail">Последний подход: до отказа + 3–5 частичных повторов в растянутой части</div>':'<div class="fail">Последний подход: остановись за 1–2 повтора до отказа, не раньше</div>';
-  if(fb&&dn===0)html+=`<div class="fbk">${FB[fb]}</div>`;
-  html+=`<div class="tip">${e.t}</div>`;
-  html+=`<a class="vid" href="https://www.youtube.com/results?search_query=${encodeURIComponent(e.n+' техника')}" target="_blank" rel="noopener">▶ Видео техники</a>`;
-  html+=`<div class="w"><span class="muted">Рабочий вес, кг</span><input type="number" inputmode="decimal" value="${w}" onchange="saveW(this.value)"></div>`;
-  html+='<div class="hint">Все подходы — с одним весом. Сделал все повторы с запасом — в следующий раз добавь вес.</div></div>';
-  html+=dn>=e.s?'<button class="primary" onclick="nextEx()">Следующее упражнение</button>':'<button class="primary" onclick="setDone()">Подход выполнен ✓</button>';
-  html+='<div class="row" style="margin-top:10px"><button onclick="go(S.i-1)">‹ Назад</button><button onclick="go(S.i+1)">Вперёд ›</button></div>';
-  $('app').innerHTML=html;tick();
+  let note='';
+  if(dn===0&&e.wu)note=`<div class="note wu">Разминка: ${e.wu}</div>`;
+  else if(dn<=1&&fb)note=`<div class="note fbk">${FB[fb]}</div>`;
+  else if(dn===e.s-1)note=e.f?'<div class="note fail">Последний подход: до отказа + 3–5 частичных повторов в растянутой части</div>':'<div class="note fail">Последний подход: остановись за 1–2 повтора до отказа, не раньше</div>';
+  let h='<div class="wk">';
+  h+=`<div class="top"><button onclick="home()">‹ Меню</button><span class="muted">${P.name} · <span id="el"></span></span><button onclick="finish(false)">Завершить</button></div>`;
+  h+='<div class="dots">'+P.ex.map((x,k)=>`<button class="dot ${S.done[k]>=x.s?'done':''} ${k===S.i?'cur':''}" onclick="go(${k})">${k+1}</button>`).join('')+'</div>';
+  h+=`<div class="title">${e.n}</div>`;
+  if(A&&!hid)h+=`<div class="anim"><svg id="animg" viewBox="80 18 220 252" preserveAspectRatio="xMidYMid meet"></svg><div class="ph" id="animtxt"></div><div class="cues">${A.cues}</div><div class="tipline">${e.t}</div></div>`;
+  else h+=`<div class="anim"><div class="tipbig">${e.t}</div>${A?`<div class="cues">${A.cues}</div>`:''}</div>`;
+  h+=`<div class="info"><div class="set" ${dn>=e.s?'style="color:#4caf50"':''}>${dn>=e.s?'Готово ✓':`Подход ${dn+1}/${e.s}`}</div><div class="meta"><b>${e.r} повторов</b><span>запас ${e.rir} · отдых ${fmt(e.rest)}</span></div></div>`;
+  h+=note;
+  h+=`<div class="tools"><label class="wt"><input type="number" inputmode="decimal" placeholder="вес" value="${w}" onchange="saveW(this.value)"><span>кг</span></label><a class="tb" href="https://www.youtube.com/results?search_query=${encodeURIComponent(e.n+' техника')}" target="_blank" rel="noopener">▶ Видео</a>${A?`<button class="tb" onclick="toggleAnim()">${hid?'Анимация':'Скрыть'}</button>`:''}</div>`;
+  h+=`<div class="act"><button class="nav" onclick="go(S.i-1)">‹</button>${dn>=e.s?'<button class="primary" onclick="nextEx()">Следующее упражнение</button>':'<button class="primary" onclick="setDone()">Подход выполнен ✓</button>'}<button class="nav" onclick="go(S.i+1)">›</button></div>`;
+  h+='</div>';
+  $('app').innerHTML=h;tick();
 }
 function saveW(v){ls.set('w:'+PLAN[S.day].ex[S.i].n,v)}
 function go(k){if(k<0||k>=PLAN[S.day].ex.length)return;S.i=k;save();render()}
@@ -422,6 +434,7 @@ function finish(auto){
   if(done>0){const h=ls.get('hist',[]);h.push({day:S.day,date:new Date().toISOString(),min,done,total});ls.set('hist',h.slice(-100))}
   S=null;save();
   if(wl){wl.release();wl=null}
+  document.body.classList.remove('wmode');
   $('rest').className='';restMode=null;
   $('app').innerHTML=`<h1>Готово!</h1><div class="card"><div class="ex">${P.name}</div><div>Подходов: ${done} из ${total}</div><div>Время: ${min} мин</div></div><button class="primary" onclick="home()">В меню</button>`;
 }
