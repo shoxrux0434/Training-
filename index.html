@@ -4,480 +4,145 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Тренировка">
-<meta name="theme-color" content="#111111">
-<title>Тренировка</title>
+<title>3D-тест</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{background:#111;color:#eee;font:17px -apple-system,system-ui,sans-serif;padding:calc(env(safe-area-inset-top) + 12px) 16px calc(env(safe-area-inset-bottom) + 16px);min-height:100vh;-webkit-user-select:none;user-select:none}
-body.wmode{height:100vh;height:100dvh;min-height:0;overflow:hidden;padding:calc(env(safe-area-inset-top) + 6px) 14px calc(env(safe-area-inset-bottom) + 10px)}
-body.wmode #app{height:100%}
-h1{font-size:28px;margin:8px 0 14px}
-h2{font-size:14px;color:#888;font-weight:600;margin:22px 0 8px;text-transform:uppercase}
-button{font:inherit;color:inherit;border:0;border-radius:14px;background:#262626;padding:14px;width:100%;touch-action:manipulation}
-button:active,.tb:active{opacity:.6}
-.primary{background:#2f80ed;color:#fff;font-weight:700;font-size:20px;padding:20px}
-.day{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;text-align:left;gap:10px}
-.day.next{outline:2px solid #2f80ed}
-.day.on{outline:2px solid #f2c94c}
-.muted{color:#888;font-size:14px}
-.row{display:flex;gap:10px}
-.row button{flex:1}
-.card{background:#1c1c1c;border-radius:18px;padding:18px;margin-bottom:14px}
-.ex{font-size:24px;font-weight:700;margin:6px 0 12px}
-.hist{font-size:15px;color:#aaa;line-height:1.8}
-.wk{display:flex;flex-direction:column;height:100%;gap:8px}
-.top{display:flex;justify-content:space-between;align-items:center}
-.top button{width:auto;padding:7px 12px;font-size:14px;border-radius:10px}
-.dots{display:flex;gap:5px;flex-wrap:nowrap}
-.dot{width:auto;min-width:0;flex:1;padding:6px 0;font-size:14px;border-radius:9px}
-.dot.done{background:#1f6f43}
-.dot.cur{outline:2px solid #2f80ed}
-.title{font-size:21px;font-weight:700;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.goal{font-size:13px;color:#7fd1b9;margin-top:2px}
-.anim{flex:1;min-height:0;display:flex;flex-direction:column;background:#161616;border-radius:14px;padding:6px 8px 8px;text-align:center}
-.anim svg{flex:1;min-height:0;width:100%;display:block}
-.ph{font-size:16px;font-weight:700;color:#f2c94c;min-height:20px}
-.cues{font-size:12px;color:#999;margin-top:2px}
-.tipline{font-size:12px;color:#777;margin-top:2px}
-.tipbig{flex:1;display:flex;align-items:center;justify-content:center;font-size:18px;color:#ccc;padding:10px;line-height:1.4}
-.info{display:flex;justify-content:space-between;align-items:center;background:#1c1c1c;border-radius:14px;padding:8px 14px;gap:10px}
-.set{font-size:30px;font-weight:800}
-.uni{font-size:12px;color:#f2c94c;margin-top:2px;line-height:1.3}
-.meta{text-align:right;display:flex;flex-direction:column;flex:none}
-.meta b{font-size:19px}
-.meta span{font-size:13px;color:#999}
-.note{padding:8px 12px;border-radius:10px;font-size:14px;line-height:1.3}
-.wu{background:#2a2410;color:#f2c94c}
-.fail{background:#3a1d17;color:#ff9b85}
-.fbk{background:#14263a;color:#8cc4ff}
-.tools{display:flex;gap:8px;align-items:center}
-.wt{display:flex;align-items:center;gap:4px;background:#262626;border-radius:12px;padding:0 10px;height:44px;flex:1;min-width:0}
-.wt input{font:inherit;font-size:18px;width:100%;min-width:0;border:0;background:transparent;color:#fff;text-align:center;height:44px;outline:none}
-.wt span{color:#888;font-size:14px}
-.tb{display:flex;align-items:center;justify-content:center;height:44px;padding:0 12px;border-radius:12px;background:#262626;color:#eee;text-decoration:none;font-size:15px;width:auto;flex:none}
-.act{display:flex;gap:8px}
-.act .nav{width:54px;flex:none;font-size:26px;padding:0}
-.act .primary{flex:1;padding:18px 8px}
-#rest{position:fixed;inset:0;background:#111;display:none;flex-direction:column;justify-content:center;align-items:center;padding:24px;text-align:center}
-#rest.on{display:flex}
-#rest.over{animation:fl 1s infinite}
-@keyframes fl{0%,100%{background:#1f6f43}50%{background:#2e9b5f}}
-.clock{font-size:96px;font-weight:800;font-variant-numeric:tabular-nums;margin:10px 0}
+html,body{margin:0;height:100%;background:#111;color:#eee;font:16px -apple-system,system-ui,sans-serif;overflow:hidden;-webkit-user-select:none;user-select:none}
+#c{position:fixed;inset:0;width:100%;height:100%;touch-action:none}
+#top{position:fixed;top:0;left:0;right:0;padding:calc(env(safe-area-inset-top) + 10px) 14px 14px;background:linear-gradient(#111 65%,transparent);display:flex;gap:10px;align-items:flex-start}
+#top a{color:#eee;text-decoration:none;background:#262626;border-radius:10px;padding:7px 12px;font-size:14px;flex:none}
+h1{font-size:19px;margin:0}
+.g{font-size:13px;color:#7fd1b9;margin-top:2px}
+.hint{font-size:12px;color:#777;margin-top:2px}
+#ui{position:fixed;left:0;right:0;bottom:0;padding:16px 14px calc(env(safe-area-inset-bottom) + 12px);background:linear-gradient(transparent,#111 35%)}
+#ph{font-size:19px;font-weight:700;color:#f2c94c;min-height:26px;text-align:center;margin-bottom:6px}
+#cues{font-size:13px;color:#999;text-align:center;margin-bottom:10px}
+.row{display:flex;gap:8px}
+button{flex:1;font:inherit;font-size:15px;color:#eee;background:#262626;border:0;border-radius:12px;padding:12px 4px;touch-action:manipulation}
+button.on{background:#2f80ed}
+#err{position:fixed;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding:30px;color:#aaa;background:#111}
 </style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head>
 <body>
-<div id="app"></div>
-<div id="rest"></div>
-<script>
-// n: название, g: для чего, s: подходы, r: повторы, rir: запас, rest: отдых (с), wu: разминка
-// f: последний подход до отказа, u: по одной руке (сначала левая), xl: +1 подход левой, ss: суперсет со следующим
-const W2='50% веса × 10, затем 75% × 5 — не считаются';
-const W1='1 подход: 60% веса × 6 — не считается';
-const PLAN={
-A:{name:'День A',ex:[
-{n:'Присед в Смите',g:'Квадрицепсы и ягодицы',s:4,r:8,rir:'1-2',rest:150,wu:W2,t:'Стопы чуть впереди, бёдра ниже параллели, без отбива'},
-{n:'Жим гантелей на наклонной 30°',g:'Верх груди, передние дельты, трицепс',s:4,r:10,rir:'1-2',rest:150,wu:W1,t:'Пауза 1 с внизу. Следи, чтобы левая шла так же глубоко'},
-{n:'Тяга верхнего блока, нейтральный хват',g:'Ширина спины (широчайшие), бицепс',s:3,r:10,rir:'1-2',rest:120,t:'Наверху полностью выпрями руки'},
-{n:'Сгибание ног сидя',g:'Задняя поверхность бедра',s:3,r:12,rir:'0-1',rest:75,f:1,t:'Корпус чуть вперёд — сильнее растяжение'},
-{n:'Разведения на кроссовере одной рукой',g:'Средние дельты — ширина плеч',s:3,r:15,rir:'0-1',rest:60,f:1,u:1,t:'Нижний блок, встань боком, свободной рукой держись за стойку'},
-{n:'Французский жим с гантелями лёжа',g:'Трицепс, особенно длинная головка',s:3,r:12,rir:'0-1',rest:75,f:1,xl:1,t:'Плечи чуть назад, опускай гантели за голову, локти не разводи'},
-{n:'Икры на платформе жима ногами',g:'Икроножные мышцы',s:3,r:12,rir:'0-1',rest:60,f:1,t:'Пауза 2 с в нижней точке'}]},
-B:{name:'День B',ex:[
-{n:'Румынская тяга со штангой',g:'Задняя поверхность бедра, ягодицы, поясница',s:4,r:8,rir:'2',rest:180,wu:W2,t:'Таз назад, спина ровная, до натяжения задней поверхности бедра'},
-{n:'Жим гантелей лёжа',g:'Грудь, передние дельты, трицепс',s:4,r:8,rir:'1-2',rest:150,wu:W1,t:'Гантели до уровня груди, левая не отстаёт по глубине'},
-{n:'Горизонтальная тяга к поясу',g:'Толщина спины, задние дельты',s:3,r:10,rir:'1-2',rest:120,t:'Вперёд — лопатки расходятся, назад — сводятся'},
-{n:'Разгибание ног, спинка откинута',g:'Квадрицепс, особенно прямая мышца бедра',s:3,r:12,rir:'0-1',rest:75,f:1,t:'Нижняя половина амплитуды — самая важная'},
-{n:'Сгибание рук на наклонной скамье',g:'Бицепс, длинная головка',s:3,r:10,rir:'0-1',rest:60,f:1,u:1,xl:1,t:'Поочерёдно, начиная с левой. Руки позади корпуса'},
-{n:'Разведения на кроссовере одной рукой',g:'Средние дельты — ширина плеч',s:3,r:15,rir:'0-1',rest:60,f:1,u:1,t:'Нижний блок, встань боком, свободной рукой держись за стойку'},
-{n:'Обратная бабочка',g:'Задние дельты и осанка',s:3,r:15,rir:'0-1',rest:60,f:1,t:'Руки почти прямые, без рывка'},
-{n:'Скручивания на скамье',g:'Мышцы пресса',s:3,r:15,rir:'1',rest:60,f:1,t:'Медленно вниз, шею не дёргать'}]},
-C:{name:'День C',ex:[
-{n:'Жим платформы ногами',g:'Квадрицепсы и ягодицы',s:4,r:10,rir:'1-2',rest:150,wu:W2,t:'Глубоко, таз не отрывается от спинки'},
-{n:'Икры на платформе жима ногами',g:'Икроножные мышцы',s:2,r:12,rir:'0-1',rest:60,f:1,t:'Сразу после жима ногами, на той же платформе'},
-{n:'Жим гантелей сидя вверх',g:'Передние и средние дельты, трицепс',s:4,r:10,rir:'1-2',rest:150,wu:W1,t:'Спина прижата, гантели опускай до уровня ушей'},
-{n:'Вертикальная тяга сидя в тренажёре',g:'Ширина спины (широчайшие)',s:3,r:10,rir:'1-2',rest:120,t:'Наверху полное растяжение, тяни локтями вниз к бокам'},
-{n:'Тяга гантели одной рукой с упором в скамью',g:'Широчайшие и толщина спины',s:3,r:10,rir:'1-2',rest:90,u:1,t:'Колено и рука на скамье, спина ровная, тяни локоть к бедру'},
-{n:'Жим от груди в хаммере',g:'Грудь и трицепс',s:3,r:10,rir:'1-2',rest:120,t:'Если рычаги независимые — по одной руке, начиная с левой'},
-{n:'Сгибание ног сидя',g:'Задняя поверхность бедра',s:3,r:12,rir:'0-1',rest:75,f:1,t:'Корпус чуть вперёд'},
-{n:'Бицепс-машина',g:'Бицепс',s:3,r:12,rir:'0-1',rest:60,f:1,u:1,xl:1,ss:1,t:'Плечо прижато к упору, без рывка'},
-{n:'Разгибание на блоке вниз одной рукой',g:'Трицепс',s:3,r:12,rir:'0-1',rest:75,f:1,u:1,xl:1,t:'Локоть прижат к боку, двигается только предплечье'}]}
-};
+<canvas id="c"></canvas>
+<div id="top"><a href="./">‹ Назад</a><div><h1>Болгарские выпады с гантелями</h1><div class="g">Для: квадрицепсы и ягодицы</div><div class="hint">Крути пальцем · двумя пальцами — масштаб</div></div></div>
+<div id="ui">
+  <div id="ph"></div>
+  <div id="cues">Оранжевый — рабочие мышцы · корпус чуть вперёд · колено по линии стопы</div>
+  <div class="row"><button data-v="side">Сбоку</button><button data-v="front">Спереди</button><button data-v="q" class="on">3/4</button><button id="pp">Пауза</button></div>
+</div>
+<div id="err">Не удалось загрузить 3D.<br>Для первого открытия нужен интернет.</div>
+<script>setTimeout(()=>{if(!window.__ok)document.getElementById('err').style.display='flex'},10000)</script>
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 
-// Анимации. f: две позы, rot: [точка, опора], ik: [конец, сустав, конец], hl: подсветка сегментов, hj: подсветка суставов
-const SIDE=[['a','k',8],['k','p',9],['p','s',11],['s','e',7],['e','w',6],['a','t',6]];
-const FSEG=[['sL','sR',9],['n','pc',11],['pL','pR',9],['pL','kL',9],['kL','aL',8],['pR','kR',9],['kR','aR',8],['aL','tL',6],['aR','tR',6],['sL','eL',7],['eL','wL',6],['sR','eR',7],['eR','wR',6]];
-const FBODY={h:[180,72],sL:[160,95],sR:[200,95],n:[180,95],pc:[180,155],pL:[170,155],pR:[190,155],kL:[168,208],aL:[168,258],kR:[192,208],aR:[192,258],tL:[156,262],tR:[204,262]};
-const FSEAT={h:[180,72],sL:[160,95],sR:[200,95],n:[180,95],pc:[180,155],pL:[170,155],pR:[190,155],kL:[158,170],aL:[158,224],kR:[202,170],aR:[202,224],tL:[148,228],tR:[212,228]};
-const SB='stroke="#555" stroke-linecap="round"';
-const PRESS_ST=`<line x1="92" y1="140" x2="176" y2="216" ${SB} stroke-width="10"/><line x1="150" y1="216" x2="205" y2="216" ${SB} stroke-width="10"/><line x1="180" y1="221" x2="180" y2="266" stroke="#555" stroke-width="4"/>`;
-const FLAT_ST=`<line x1="100" y1="212" x2="232" y2="212" ${SB} stroke-width="10"/><line x1="115" y1="217" x2="115" y2="266" stroke="#555" stroke-width="4"/><line x1="215" y1="217" x2="215" y2="266" stroke="#555" stroke-width="4"/>`;
-const FLAT_BODY={h:[110,196],s:[128,200],p:[186,200],k:[234,192],a:[244,250],t:[262,262]};
-const L_ROT=[['eL','sL'],['wL','eL']];
-const LAT_ROT=[['eL','sL'],['wL','eL'],['eR','sR'],['wR','eR']];
-const PULL_F=[{h:[163,119],s:[160,140],e:[165,109],w:[170,78],p:[168,198],k:[222,193],a:[226,252],t:[246,262]},{e:[148,168],w:[166,142]}];
-const ANIM={
-'Присед в Смите':{seg:SIDE,ik:[['a','k','p']],hl:['k-p'],
- st:'<line x1="182" y1="30" x2="182" y2="266" stroke="#555" stroke-dasharray="4 5"/>',
- f:[{h:[184,70],s:[182,91],e:[168,108],w:[184,88],p:[186,151],k:[195,205],a:[200,260],t:[224,262]},
-    {h:[184,141],s:[182,162],e:[168,179],w:[184,159],p:[178,222],k:[232,215]}],
- items:[{t:'bar',p:'w'}],
- ph:[[1.4,'Вниз медленно'],[0.4,'Пауза, без отбива'],[0.9,'Вверх мощно'],[0.5,'']],
- cues:'Гриф строго вертикально · бёдра ниже параллели · спина ровная'},
-'Жим гантелей на наклонной 30°':{seg:SIDE,ik:[['s','e','w']],hl:['p-s'],
- st:`<line x1="186" y1="214" x2="96" y2="163" ${SB} stroke-width="10"/><line x1="160" y1="214" x2="218" y2="214" ${SB} stroke-width="10"/><line x1="190" y1="219" x2="190" y2="266" stroke="#555" stroke-width="4"/><line x1="112" y1="176" x2="112" y2="266" stroke="#555" stroke-width="4"/>`,
- f:[{h:[100,156],s:[118,166],e:[120,133],w:[122,101],p:[172,196],k:[222,192],a:[230,254],t:[250,262]},
-    {e:[106,197],w:[124,170]}],
- items:[{t:'db',p:'w'}],
- ph:[[1.4,'Медленно вниз'],[0.5,'Пауза в растяжении'],[0.9,'Выжми вверх'],[0.5,'']],
- cues:'Гантели до уровня груди · лопатки сведены · без отбива'},
-'Тяга верхнего блока, нейтральный хват':{seg:SIDE,ik:[['s','e','w']],hl:['p-s'],
- st:`<circle cx="172" cy="30" r="7" fill="none" stroke="#555" stroke-width="3"/><line x1="140" y1="208" x2="198" y2="208" ${SB} stroke-width="10"/><line x1="170" y1="213" x2="170" y2="266" stroke="#555" stroke-width="4"/><rect x="208" y="176" width="28" height="9" rx="4" fill="#555"/>`,
- f:PULL_F,
- items:[{t:'cable',p:'w',from:[172,30]}],
- ph:[[0.9,'Тяни локтями вниз'],[0.4,'Сведи лопатки'],[1.4,'Медленно вверх'],[0.6,'Руки прямые — растяжение']],
- cues:'Корпус почти неподвижен · наверху полностью выпрями руки'},
-'Сгибание ног сидя':{seg:SIDE,rot:[['a','k'],['t','a']],hl:['k-p'],
- st:`<line x1="132" y1="200" x2="200" y2="200" ${SB} stroke-width="10"/><line x1="136" y1="200" x2="128" y2="130" ${SB} stroke-width="10"/><line x1="165" y1="205" x2="165" y2="266" stroke="#555" stroke-width="4"/><rect x="194" y="170" width="32" height="9" rx="4" fill="#555"/>`,
- f:[{h:[176,112],s:[172,133],e:[166,163],w:[182,188],p:[160,190],k:[214,190],a:[268,197],t:[274,180]},
-    {a:[200,243],t:[216,252]}],
- items:[{t:'roll',p:'a'}],
- ph:[[0.9,'Согни ноги'],[0.4,'Пауза'],[1.4,'Медленно разогни'],[0.5,'Растяжение']],
- cues:'Корпус наклонён вперёд · полная амплитуда · без рывков'},
-'Разведения на кроссовере одной рукой':{seg:FSEG,rot:L_ROT,hj:['sL'],
- st:'<line x1="242" y1="30" x2="242" y2="266" stroke="#555" stroke-width="4"/><circle cx="238" cy="256" r="6" fill="none" stroke="#555" stroke-width="3"/>',
- f:[{...FBODY,eR:[214,118],wR:[236,132],eL:[156,125],wL:[162,155]},
-    {eL:[130,98],wL:[100,101]}],
- items:[{t:'cable',p:'wL',from:[238,256]}],
- ph:[[1.0,'Рука в сторону'],[0.3,'До уровня плеча'],[1.4,'Медленно вниз'],[0.4,'Трос держит нагрузку']],
- cues:'Сначала левая · без раскачки · не выше плеча'},
-'Французский жим с гантелями лёжа':{seg:SIDE,rot:[['w','e']],hl:['s-e'],st:FLAT_ST,
- f:[{...FLAT_BODY,e:[116,170],w:[105,142]},{w:[88,179]}],
- items:[{t:'db',p:'w'}],
- ph:[[1.4,'Медленно за голову'],[0.5,'Растяжение'],[0.9,'Разогни руки'],[0.4,'']],
- cues:'Локти смотрят вверх и не разъезжаются · гантели за голову, не ко лбу'},
-'Икры на платформе жима ногами':{seg:SIDE,rot:[['t','a']],hl:['a-k'],st:PRESS_ST,
- f:[{h:[116,145],s:[130,160],e:[145,187],w:[172,195],p:[172,205],k:[225,182],a:[275,162],t:[260,144]},
-    {t:[278,138]}],
- items:[{t:'plat',a:'a',p:'t',k:'k'}],
- ph:[[0.9,'Толкни носками'],[0.3,'Сжатие'],[1.2,'Медленно назад'],[1.8,'Пауза 2 с в растяжении']],
- cues:'Колени прямые · пауза внизу · полная амплитуда'},
-'Румынская тяга со штангой':{seg:SIDE,ik:[['a','k','p']],rot:[['s','p'],['h','s'],['e','s'],['w','e']],hl:['k-p'],st:'',
- f:[{h:[188,71],s:[186,92],e:[188,122],w:[194,152],p:[188,152],k:[192,206],a:[190,258],t:[212,262]},
-    {h:[220,127],s:[204,138],e:[204,169],w:[204,199],p:[155,172],k:[196,210]}],
- items:[{t:'bar',p:'w'}],
- ph:[[1.6,'Таз назад, медленно'],[0.4,'Натяжение задней поверхности'],[1.0,'Таз вперёд, вверх'],[0.5,'']],
- cues:'Спина ровная · гриф скользит по ногам · колени чуть согнуты'},
-'Жим гантелей лёжа':{seg:SIDE,ik:[['s','e','w']],hl:['p-s'],st:FLAT_ST,
- f:[{...FLAT_BODY,e:[134,168],w:[137,137]},{e:[146,226],w:[146,192]}],
- items:[{t:'db',p:'w'}],
- ph:[[1.4,'Медленно к груди'],[0.4,'Пауза в растяжении'],[0.9,'Выжми вверх'],[0.5,'']],
- cues:'Обе гантели на одной глубине · лопатки сведены · без отбива'},
-'Горизонтальная тяга к поясу':{seg:SIDE,rot:[['s','p'],['h','s']],ik:[['s','e','w']],hl:['p-s'],
- st:`<line x1="110" y1="232" x2="205" y2="232" ${SB} stroke-width="10"/><line x1="150" y1="237" x2="150" y2="266" stroke="#555" stroke-width="4"/><line x1="258" y1="188" x2="258" y2="242" ${SB} stroke-width="6"/><circle cx="278" cy="205" r="7" fill="none" stroke="#555" stroke-width="3"/>`,
- f:[{h:[178,146],s:[170,166],e:[196,178],w:[224,188],p:[150,222],k:[200,205],a:[248,224],t:[254,206]},
-    {h:[152,142],s:[150,163],e:[128,190],w:[156,200]}],
- items:[{t:'cable',p:'w',from:[278,205]}],
- ph:[[0.9,'Тяни к поясу'],[0.4,'Сведи лопатки'],[1.4,'Медленно вперёд'],[0.5,'Растяжение спины']],
- cues:'Грудь вперёд · тяни локтями назад · корпус почти не качается'},
-'Разгибание ног, спинка откинута':{seg:SIDE,rot:[['a','k'],['t','a']],hl:['k-p'],
- st:`<line x1="150" y1="210" x2="104" y2="140" ${SB} stroke-width="10"/><line x1="140" y1="210" x2="212" y2="210" ${SB} stroke-width="10"/><line x1="176" y1="215" x2="176" y2="266" stroke="#555" stroke-width="4"/>`,
- f:[{h:[112,133],s:[124,149],e:[142,176],w:[166,200],p:[158,198],k:[212,197],a:[212,252],t:[232,258]},
-    {a:[266,192],t:[272,174]}],
- items:[{t:'roll',p:'a'}],
- ph:[[0.9,'Разогни ноги'],[0.4,'Сожми бедро'],[1.4,'Медленно вниз'],[0.5,'Глубокий сгиб']],
- cues:'Спинка откинута · нижняя часть амплитуды самая важная · без рывка'},
-'Сгибание рук на наклонной скамье':{seg:SIDE,rot:[['w','e']],hl:['s-e'],
- st:`<line x1="160" y1="220" x2="116" y2="145" ${SB} stroke-width="10"/><line x1="150" y1="220" x2="214" y2="220" ${SB} stroke-width="10"/><line x1="180" y1="225" x2="180" y2="266" stroke="#555" stroke-width="4"/>`,
- f:[{h:[126,138],s:[136,155],e:[134,185],w:[132,215],p:[170,208],k:[222,204],a:[228,258],t:[248,262]},
-    {w:[162,170]}],
- items:[{t:'db',p:'w'}],
- ph:[[0.9,'Согни руку'],[0.3,'Сожми бицепс'],[1.4,'Медленно вниз'],[0.5,'Полностью выпрями']],
- cues:'Сначала левая · локоть неподвижен · рука позади корпуса'},
-'Обратная бабочка':{seg:FSEG,rot:LAT_ROT,hj:['sL','sR'],
- st:'<rect x="146" y="158" width="68" height="9" rx="4" fill="#555"/>',
- f:[{...FSEAT,eL:[150,104],wL:[176,100],eR:[210,104],wR:[184,100]},
-    {eL:[128,96],wL:[98,96],eR:[232,96],wR:[262,96]}],
- items:[{t:'db',p:'wL'},{t:'db',p:'wR'}],
- ph:[[1.0,'Разведи руки назад'],[0.4,'Сведи лопатки'],[1.4,'Медленно вперёд'],[0.4,'']],
- cues:'Вид со спины · руки почти прямые · без рывка'},
-'Скручивания на скамье':{seg:[['a','k',8],['k','p',9],['p','m',11],['m','s',11],['s','e',7],['e','w',6],['a','t',6]],rot:[['s','m'],['h','s'],['e','s'],['w','e']],hl:['p-m','m-s'],
- st:`<line x1="88" y1="224" x2="262" y2="224" ${SB} stroke-width="10"/><line x1="110" y1="229" x2="110" y2="266" stroke="#555" stroke-width="4"/><line x1="240" y1="229" x2="240" y2="266" stroke="#555" stroke-width="4"/>`,
- f:[{h:[100,207],s:[120,210],m:[150,211],p:[180,210],k:[214,170],a:[240,212],t:[258,214],e:[132,203],w:[144,206]},
-    {h:[110,181],s:[125,193],e:[137,186],w:[148,190]}],
- items:[],
- ph:[[0.9,'Скрутись вверх'],[0.4,'Выдох, сжатие'],[1.4,'Медленно вниз'],[0.4,'']],
- cues:'Поясница прижата · скручивай грудь к тазу · шею руками не тяни'},
-'Жим платформы ногами':{seg:SIDE,ik:[['p','k','a']],hl:['k-p'],st:PRESS_ST,
- f:[{h:[116,145],s:[130,160],e:[145,187],w:[172,195],p:[172,205],k:[222,180],a:[272,160],t:[264,140]},
-    {k:[174,148],a:[228,148],t:[220,128]}],
- items:[{t:'plat',a:'a',p:'t',k:'k'}],
- ph:[[1.4,'Медленно вниз'],[0.4,'Глубоко, таз прижат'],[0.9,'Выжми'],[0.5,'Колени не выпрямляй до щелчка']],
- cues:'Таз не отрывается · колени по направлению стоп · глубокая амплитуда'},
-'Жим гантелей сидя вверх':{seg:SIDE,ik:[['s','e','w']],hl:['s-e'],hj:['s'],
- st:`<line x1="154" y1="214" x2="154" y2="118" ${SB} stroke-width="10"/><line x1="144" y1="214" x2="205" y2="214" ${SB} stroke-width="10"/><line x1="172" y1="219" x2="172" y2="266" stroke="#555" stroke-width="4"/>`,
- f:[{h:[172,119],s:[170,140],e:[176,168],w:[176,138],p:[168,200],k:[220,200],a:[224,256],t:[244,262]},
-    {e:[172,110],w:[174,80]}],
- items:[{t:'db',p:'w'}],
- ph:[[0.9,'Выжми вверх'],[0.3,''],[1.4,'Медленно вниз'],[0.4,'Гантели у ушей']],
- cues:'Спина прижата · обе руки на одной высоте · локти чуть впереди'},
-'Вертикальная тяга сидя в тренажёре':{seg:SIDE,ik:[['s','e','w']],hl:['p-s'],
- st:`<line x1="238" y1="20" x2="238" y2="266" stroke="#555" stroke-width="5"/><line x1="238" y1="34" x2="204" y2="34" stroke="#555" stroke-width="5"/><line x1="140" y1="208" x2="198" y2="208" ${SB} stroke-width="10"/><line x1="170" y1="213" x2="170" y2="266" stroke="#555" stroke-width="4"/><rect x="208" y="176" width="28" height="9" rx="4" fill="#555"/>`,
- f:PULL_F,
- items:[{t:'cable',p:'w',from:[204,34]}],
- ph:[[0.9,'Тяни локтями к бокам'],[0.4,'Сведи лопатки'],[1.4,'Медленно вверх'],[0.6,'Полное растяжение']],
- cues:'Грудь вперёд · тяни локтями, а не кистями · наверху руки прямые'},
-'Тяга гантели одной рукой с упором в скамью':{seg:SIDE.concat([['s','e2',6],['e2','w2',6],['p','kb',9],['kb','ab',8]]),ik:[['s','e','w']],hl:['p-s'],
- st:`<line x1="80" y1="209" x2="215" y2="209" ${SB} stroke-width="10"/><line x1="100" y1="214" x2="100" y2="266" stroke="#555" stroke-width="4"/><line x1="200" y1="214" x2="200" y2="266" stroke="#555" stroke-width="4"/>`,
- f:[{h:[208,160],s:[188,166],e:[189,196],w:[190,226],e2:[189,183],w2:[190,200],p:[128,170],kb:[132,200],ab:[90,202],k:[122,218],a:[126,262],t:[146,264]},
-    {e:[160,150],w:[164,180]}],
- items:[{t:'db',p:'w'}],
- ph:[[0.9,'Тяни локоть к бедру'],[0.4,'Сожми спину'],[1.4,'Медленно вниз'],[0.5,'Растяжение внизу']],
- cues:'Сначала левая сторона · спина ровная · внизу полностью опусти руку'},
-'Жим от груди в хаммере':{seg:SIDE,ik:[['s','e','w']],hl:['p-s'],
- st:`<line x1="148" y1="214" x2="148" y2="118" ${SB} stroke-width="10"/><line x1="140" y1="214" x2="202" y2="214" ${SB} stroke-width="10"/><line x1="170" y1="219" x2="170" y2="266" stroke="#555" stroke-width="4"/>`,
- f:[{h:[168,119],s:[166,140],e:[146,152],w:[176,148],p:[160,200],k:[212,200],a:[216,256],t:[236,262]},
-    {e:[196,144],w:[226,148]}],
- items:[{t:'cable',p:'w',from:[262,70]},{t:'db',p:'w'}],
- ph:[[0.9,'Выжми вперёд'],[0.3,''],[1.4,'Медленно назад'],[0.5,'Растяжение груди']],
- cues:'Лопатки сведены · локти чуть ниже плеч · без отбива'},
-'Бицепс-машина':{seg:SIDE,rot:[['w','e']],hl:['s-e'],
- st:`<line x1="140" y1="215" x2="196" y2="215" ${SB} stroke-width="10"/><line x1="168" y1="220" x2="168" y2="266" stroke="#555" stroke-width="4"/><line x1="184" y1="164" x2="218" y2="194" ${SB} stroke-width="10"/><line x1="212" y1="198" x2="212" y2="266" stroke="#555" stroke-width="4"/>`,
- f:[{h:[184,127],s:[178,148],e:[200,168],w:[222,190],p:[160,205],k:[212,208],a:[216,262],t:[236,264]},
-    {w:[196,140]}],
- items:[{t:'db',p:'w'}],
- ph:[[0.9,'Согни руку'],[0.3,'Сожми бицепс'],[1.4,'Медленно разогни'],[0.5,'Почти до конца']],
- cues:'Сначала левая · плечо прижато к упору · без рывка'},
-'Разгибание на блоке вниз одной рукой':{seg:SIDE,rot:[['w','e']],hl:['s-e'],
- st:'<line x1="238" y1="20" x2="238" y2="266" stroke="#555" stroke-width="4"/><circle cx="232" cy="30" r="6" fill="none" stroke="#555" stroke-width="3"/>',
- f:[{h:[184,71],s:[180,92],e:[178,122],w:[198,100],p:[180,152],k:[182,206],a:[180,258],t:[202,262]},
-    {w:[182,152]}],
- items:[{t:'cable',p:'w',from:[232,30]}],
- ph:[[0.9,'Разогни вниз'],[0.3,'Сожми трицепс'],[1.2,'Медленно вверх'],[0.3,'']],
- cues:'Сначала левая · локоть прижат к боку · двигается только предплечье'}
-};
+// Позы (те же, что в 2D): f0 — верх, f1 — низ
+const F0={a:[214,258],t:[234,262],k:[200,205],p:[180,150],s:[186,90],h:[189,69],e:[186,120],w:[186,150],kb:[160,196],ab:[118,214],tb:[100,212]};
+const F1={k:[226,212],p:[176,200],s:[182,140],h:[185,119],e:[182,170],w:[182,200],kb:[164,246]};
+const IKS=[['a','k','p'],['p','kb','ab']];
+const PH=[[1.4,'Медленно вниз'],[0.4,'Заднее колено почти у пола'],[0.9,'Вверх через пятку передней'],[0.5,'']];
 
-const $=id=>document.getElementById(id);
-const ls={get:(k,d)=>{try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set:(k,v)=>localStorage.setItem(k,JSON.stringify(v))};
-let S=ls.get('state',null);
-const save=()=>ls.set('state',S);
-const fmt=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
-const dt=iso=>new Date(iso).toLocaleDateString('ru-RU',{day:'numeric',month:'short'});
-const DL=()=>ls.get('deload',false);
-const SETS=e=>DL()?Math.ceil(e.s/2):e.s;
-
-// звук: один сигнал
-let ac;
-function unlock(){try{if(navigator.audioSession)navigator.audioSession.type='playback';if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume()}catch(e){}}
-document.addEventListener('touchend',unlock,{passive:true});
-document.addEventListener('click',unlock);
-function beep(){if(!ac)return;const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;o.connect(g);g.connect(ac.destination);const s=ac.currentTime;g.gain.setValueAtTime(.0001,s);g.gain.exponentialRampToValueAtTime(.8,s+.02);g.gain.setValueAtTime(.8,s+.45);g.gain.exponentialRampToValueAtTime(.0001,s+.6);o.start(s);o.stop(s+.62)}
-
-let wl=null;
-async function keepAwake(){try{if('wakeLock' in navigator&&S&&!wl){wl=await navigator.wakeLock.request('screen');wl.addEventListener('release',()=>{wl=null})}}catch(e){}}
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){keepAwake();tick()}});
-
-// движок анимации
-const F1=n=>n.toFixed(1);
-const L=(a,b,c,w)=>`<line x1="${F1(a[0])}" y1="${F1(a[1])}" x2="${F1(b[0])}" y2="${F1(b[1])}" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/>`;
-const C=(p,r,c)=>`<circle cx="${F1(p[0])}" cy="${F1(p[1])}" r="${r}" fill="${c}"/>`;
-const nrm=v=>{const l=Math.hypot(v[0],v[1])||1;return[v[0]/l,v[1]/l]};
-const ease=x=>x*x*(3-2*x);
-const lerp=(a,b,f)=>[a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f];
-const MUSCLE='#ff7a59',BODY='#e8e8e8',GHOST='#2c2c2c',GEAR='#5aa9ff';
-function prep(A){
-  if(A._ok)return;A._ok=1;
-  const g=(i,k)=>i?(A.f[1][k]||A.f[0][k]):A.f[0][k];
-  const len=(i,a,b)=>Math.hypot(g(i,a)[0]-g(i,b)[0],g(i,a)[1]-g(i,b)[1]);
-  A._ik=(A.ik||[]).map(([x,m,y])=>{
-    let best=0;
-    [0,1].forEach(i=>{const X=g(i,x),Y=g(i,y),M=g(i,m),c=(Y[0]-X[0])*(M[1]-X[1])-(Y[1]-X[1])*(M[0]-X[0]);if(Math.abs(c)>Math.abs(best))best=c});
-    return[x,m,y,(len(0,x,m)+len(1,x,m))/2,(len(0,m,y)+len(1,m,y))/2,best>=0?1:-1];
-  });
-  A._hl=new Set(A.hl||[]);
-  A._gh=figure(pose(A,0),A,true)+figure(pose(A,1),A,true);
-}
-function pose(A,f){
-  const P0=A.f[0],P1=A.f[1],P={},g1=k=>P1[k]||P0[k];
-  for(const k in P0)P[k]=lerp(P0[k],g1(k),f);
-  (A.rot||[]).forEach(([c,par])=>{
-    const v0=[P0[c][0]-P0[par][0],P0[c][1]-P0[par][1]],c1=g1(c),p1=g1(par),v1=[c1[0]-p1[0],c1[1]-p1[1]];
-    const r0=Math.hypot(v0[0],v0[1]),r1=Math.hypot(v1[0],v1[1]),a0=Math.atan2(v0[1],v0[0]);
-    let da=Math.atan2(v1[1],v1[0])-a0;while(da>Math.PI)da-=2*Math.PI;while(da<-Math.PI)da+=2*Math.PI;
-    const r=r0+(r1-r0)*f,an=a0+da*f;P[c]=[P[par][0]+r*Math.cos(an),P[par][1]+r*Math.sin(an)];
-  });
-  (A._ik||[]).forEach(([x,m,y,L1,L2,sg])=>{
-    const X=P[x],Y=P[y],dx=Y[0]-X[0],dy=Y[1]-X[1];let d=Math.hypot(dx,dy)||1;
-    const ux=dx/d,uy=dy/d;d=Math.min(Math.max(d,Math.abs(L1-L2)+0.1),L1+L2-0.1);
-    const a=(L1*L1-L2*L2+d*d)/(2*d),h=Math.sqrt(Math.max(0,L1*L1-a*a));
-    P[m]=[X[0]+ux*a-uy*h*sg,X[1]+uy*a+ux*h*sg];
-  });
+const g2=(i,k)=>i?(F1[k]||F0[k]):F0[k];
+const len=(i,a,b)=>Math.hypot(g2(i,a)[0]-g2(i,b)[0],g2(i,a)[1]-g2(i,b)[1]);
+const ik=IKS.map(([x,m,y])=>{let best=0;[0,1].forEach(i=>{const X=g2(i,x),Y=g2(i,y),M=g2(i,m),c=(Y[0]-X[0])*(M[1]-X[1])-(Y[1]-X[1])*(M[0]-X[0]);if(Math.abs(c)>Math.abs(best))best=c});return[x,m,y,(len(0,x,m)+len(1,x,m))/2,(len(0,m,y)+len(1,m,y))/2,best>=0?1:-1]});
+function pose2(f){
+  const P={};
+  for(const k in F0){const a=F0[k],b=F1[k]||a;P[k]=[a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f]}
+  ik.forEach(([x,m,y,L1,L2,sg])=>{const X=P[x],Y=P[y],dx=Y[0]-X[0],dy=Y[1]-X[1];let d=Math.hypot(dx,dy)||1;const ux=dx/d,uy=dy/d;d=Math.min(Math.max(d,Math.abs(L1-L2)+0.1),L1+L2-0.1);const a=(L1*L1-L2*L2+d*d)/(2*d),h=Math.sqrt(Math.max(0,L1*L1-a*a));P[m]=[X[0]+ux*a-uy*h*sg,X[1]+uy*a+ux*h*sg]});
   return P;
 }
-function figure(P,A,ghost){
-  let s='';
-  A.seg.forEach(g=>{s+=L(P[g[0]],P[g[1]],ghost?GHOST:(A._hl.has(g[0]+'-'+g[1])?MUSCLE:BODY),g[2])});
-  s+=C(P.h,13,ghost?GHOST:BODY);
-  if(!ghost)(A.hj||[]).forEach(j=>{s+=C(P[j],7,MUSCLE)});
-  return s;
-}
-function frame(A,f){
-  prep(A);
-  const P=pose(A,f);
-  let s='<line x1="80" y1="266" x2="300" y2="266" stroke="#444" stroke-width="2"/>'+A._gh+(A.st||'');
-  A.items.forEach(it=>{
-    if(it.t==='cable')s+=L(it.from,P[it.p],'#888',2);
-    if(it.t==='plat'){const a=P[it.a],t=P[it.p],k=P[it.k],u=nrm([t[0]-a[0],t[1]-a[1]]),d=nrm([a[0]-k[0],a[1]-k[1]]);
-      s+=L([a[0]-u[0]*14+d[0]*8,a[1]-u[1]*14+d[1]*8],[t[0]+u[0]*22+d[0]*8,t[1]+u[1]*22+d[1]*8],GEAR,7)}
-  });
-  s+=figure(P,A,false);
-  A.items.forEach(it=>{
-    if(it.t==='bar')s+=C(P[it.p],8,GEAR);
-    if(it.t==='db')s+=C(P[it.p],9,GEAR);
-    if(it.t==='roll')s+=C(P[it.p],9,'#777');
-    if(it.t==='cable')s+=C(P[it.p],5,GEAR);
-  });
-  return s;
-}
-let animT0=performance.now(),animKey='';
-function animLoop(now){
-  requestAnimationFrame(animLoop);
-  const g=$('animg');if(!g||!S)return;
-  const A=ANIM[PLAN[S.day].ex[S.i].n];if(!A)return;
-  const P=A.ph,tot=P.reduce((a,x)=>a+x[0],0);
-  let t=((now-animT0)/1000)%tot,f,txt;
-  if(t<P[0][0]){f=ease(t/P[0][0]);txt=P[0][1]}
-  else if((t-=P[0][0])<P[1][0]){f=1;txt=P[1][1]}
-  else if((t-=P[1][0])<P[2][0]){f=1-ease(t/P[2][0]);txt=P[2][1]}
-  else{f=0;txt=P[3][1]}
-  g.innerHTML=frame(A,f);
-  const tx=$('animtxt');if(tx&&tx.textContent!==txt)tx.textContent=txt;
-}
-requestAnimationFrame(animLoop);
-function toggleAnim(){ls.set('hideAnim',!ls.get('hideAnim',false));render()}
 
-const FB={1:'В прошлый раз было легко — добавь 5–10% веса',2:'В прошлый раз нормально — сделал все повторы? Добавь минимальный шаг веса',3:'В прошлый раз было тяжело — оставь этот вес'};
+// Сцена
+const cv=document.getElementById('c');
+const R=new THREE.WebGLRenderer({canvas:cv,antialias:true});
+R.setPixelRatio(Math.min(devicePixelRatio,2));
+R.shadowMap.enabled=true;
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x111111);
+const cam=new THREE.PerspectiveCamera(38,1,0.05,50);
+const ctl=new OrbitControls(cam,cv);
+ctl.target.set(0,0.95,-0.1);ctl.enableDamping=true;ctl.enablePan=false;ctl.minDistance=2;ctl.maxDistance=7;ctl.maxPolarAngle=Math.PI*0.5;
+scene.add(new THREE.HemisphereLight(0xffffff,0x303040,1.1));
+const sun=new THREE.DirectionalLight(0xffffff,1.7);sun.position.set(2.5,4,3);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);
+Object.assign(sun.shadow.camera,{left:-2,right:2,top:3,bottom:-1});scene.add(sun);
+const floor=new THREE.Mesh(new THREE.CircleGeometry(3,48),new THREE.MeshStandardMaterial({color:0x1c1c1c,roughness:1}));
+floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;scene.add(floor);
+const grid=new THREE.GridHelper(6,24,0x2c2c2c,0x232323);grid.position.y=0.002;scene.add(grid);
 
-function nextDay(){const h=ls.get('hist',[]);return h.length?{A:'B',B:'C',C:'A'}[h[h.length-1].day]:'A'}
-function toggleDL(){const v=!DL();ls.set('deload',v);ls.set('dlc',0);if(!v)ls.set('dlAt',ls.get('hist',[]).length);home()}
+const M=c=>new THREE.MeshStandardMaterial({color:c,roughness:0.55,metalness:0.05});
+const BODY=M(0xe6e6e6),MUS=M(0xff7a59),GEAR=M(0x5aa9ff),BENCH=M(0x4a4a4a);
+const UP=new THREE.Vector3(0,1,0);
+function seg(r,mat){const m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,1,18),mat);m.castShadow=true;scene.add(m);return m}
+function ball(r,mat){const m=new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat);m.castShadow=true;scene.add(m);return m}
+function setSeg(m,A,B){const d=B.clone().sub(A),l=d.length();m.position.copy(A).addScaledVector(d,0.5);m.scale.set(1,l,1);m.quaternion.setFromUnitVectors(UP,d.normalize())}
 
-function home(){
-  document.body.classList.remove('wmode');
-  const h=ls.get('hist',[]),nd=nextDay(),since=h.length-ls.get('dlAt',0);
-  const last=d=>{for(let i=h.length-1;i>=0;i--)if(h[i].day===d)return h[i].date;return null};
-  let html='<h1>Тренировка</h1>';
-  if(!DL()&&since>=18)html+=`<div class="note fbk" style="margin-bottom:12px">Уже ${since} тренировок без разгрузки — пора на неделю разгрузки</div>`;
-  if(S)html+=`<button class="primary" onclick="openW()">Продолжить: ${PLAN[S.day].name}</button><h2>Или начать заново</h2>`;
-  else html+=`<p class="muted" style="margin-bottom:12px">Следующая по очереди: <b style="color:#eee">${PLAN[nd].name}</b></p>`;
-  for(const d of ['A','B','C']){
-    const l=last(d),P=PLAN[d];
-    html+=`<button class="day ${!S&&d===nd?'next':''}" onclick="start('${d}')"><span><b>${P.name}</b><br><span class="muted">${P.ex.length} упр. · ${P.ex.reduce((a,e)=>a+SETS(e),0)} подх.</span></span><span class="muted">${l?dt(l):'ещё не было'}</span></button>`;
-  }
-  html+=`<button class="day ${DL()?'on':''}" onclick="toggleDL()"><span><b>Неделя разгрузки</b><br><span class="muted">${DL()?'Включена: подходов вдвое меньше, до отказа не доходи. Выключится сама через 3 тренировки':'Раз в 6–8 недель или когда накопилась усталость'}</span></span><span class="muted">${DL()?'вкл':'выкл'}</span></button>`;
-  if(h.length)html+='<h2>История</h2><div class="hist">'+h.slice(-10).reverse().map(x=>`${dt(x.date)} — ${PLAN[x.day].name}, ${x.min} мин${x.done<x.total?` (${x.done}/${x.total} подх.)`:''}${x.dl?' · разгрузка':''}`).join('<br>')+'</div>';
-  $('app').innerHTML=html;
-}
+// Скамья под задней ногой
+const SC=0.0085;
+const bench=new THREE.Group();
+const top=new THREE.Mesh(new THREE.BoxGeometry(0.34,0.06,0.42),BENCH);top.position.y=0.36;top.castShadow=true;top.receiveShadow=true;bench.add(top);
+[[-0.13],[0.13]].forEach(([z])=>{const leg=new THREE.Mesh(new THREE.BoxGeometry(0.28,0.33,0.04),BENCH);leg.position.set(0,0.165,z);leg.castShadow=true;bench.add(leg)});
+bench.position.set(-0.1,0,(118-180)*SC-0.08);scene.add(bench);
 
-function start(d){
-  if(S&&!confirm('Текущая тренировка не завершена. Начать новую?'))return;
-  S={day:d,i:0,done:PLAN[d].ex.map(()=>0),t0:Date.now(),restEnd:null,beeped:false,label:'',rq:[]};
-  save();openW();
-}
-function openW(){
-  const P=PLAN[S.day];
-  if(S.done.length!==P.ex.length)S.done=P.ex.map((e,k)=>Math.min(S.done[k]||0,e.s));
-  if(S.i>=P.ex.length)S.i=0;
-  if(!S.rq)S.rq=[];
-  keepAwake();render();tick();
+// Манекен
+const parts={
+  torso:seg(0.12,BODY),neck:seg(0.045,BODY),pelvis:seg(0.075,BODY),shoulders:seg(0.06,BODY),
+  thL:seg(0.068,MUS),shinL:seg(0.05,BODY),footL:seg(0.035,BODY),
+  thR:seg(0.068,BODY),shinR:seg(0.05,BODY),footR:seg(0.035,BODY),
+  uaL:seg(0.045,BODY),faL:seg(0.038,BODY),uaR:seg(0.045,BODY),faR:seg(0.038,BODY)
+};
+const J={
+  head:ball(0.11,BODY),chest:ball(0.12,BODY),hipC:ball(0.12,BODY),
+  hipL:ball(0.085,MUS),hipR:ball(0.08,BODY),kneeL:ball(0.06,BODY),kneeR:ball(0.06,BODY),ankL:ball(0.045,BODY),ankR:ball(0.045,BODY),
+  shL:ball(0.065,BODY),shR:ball(0.065,BODY),elL:ball(0.045,BODY),elR:ball(0.045,BODY),wrL:ball(0.038,BODY),wrR:ball(0.038,BODY)
+};
+function dumbbell(){const g=new THREE.Group();const h=new THREE.Mesh(new THREE.CylinderGeometry(0.016,0.016,0.16,10),GEAR);h.rotation.z=Math.PI/2;g.add(h);
+  [-0.09,0.09].forEach(x=>{const d=new THREE.Mesh(new THREE.CylinderGeometry(0.055,0.055,0.045,18),GEAR);d.rotation.z=Math.PI/2;d.position.x=x;d.castShadow=true;g.add(d)});scene.add(g);return g}
+const dbL=dumbbell(),dbR=dumbbell();
+
+const V=(p,x)=>new THREE.Vector3(x,(266-p[1])*SC,(p[0]-180)*SC);
+function update(f){
+  const P=pose2(f);
+  const q={
+    hipC:V(P.p,0),hipL:V(P.p,0.1),hipR:V(P.p,-0.1),
+    kneeL:V(P.k,0.1),ankL:V(P.a,0.1),toeL:V(P.t,0.1),
+    kneeR:V(P.kb,-0.1),ankR:V(P.ab,-0.1),toeR:V(P.tb,-0.1),
+    chest:V(P.s,0).add(new THREE.Vector3(0,-0.06,0)),shL:V(P.s,0.19),shR:V(P.s,-0.19),
+    elL:V(P.e,0.22),wrL:V(P.w,0.22),elR:V(P.e,-0.22),wrR:V(P.w,-0.22),
+    head:V(P.h,0).add(new THREE.Vector3(0,0.03,0))
+  };
+  setSeg(parts.torso,q.hipC,q.chest);setSeg(parts.neck,q.chest,q.head);
+  setSeg(parts.pelvis,q.hipR,q.hipL);setSeg(parts.shoulders,q.shR,q.shL);
+  setSeg(parts.thL,q.hipL,q.kneeL);setSeg(parts.shinL,q.kneeL,q.ankL);setSeg(parts.footL,q.ankL,q.toeL);
+  setSeg(parts.thR,q.hipR,q.kneeR);setSeg(parts.shinR,q.kneeR,q.ankR);setSeg(parts.footR,q.ankR,q.toeR);
+  setSeg(parts.uaL,q.shL,q.elL);setSeg(parts.faL,q.elL,q.wrL);setSeg(parts.uaR,q.shR,q.elR);setSeg(parts.faR,q.elR,q.wrR);
+  for(const k in J)J[k].position.copy(q[k]);
+  dbL.position.copy(q.wrL).add(new THREE.Vector3(0.02,-0.03,0));dbR.position.copy(q.wrR).add(new THREE.Vector3(-0.02,-0.03,0));
 }
 
-function render(){
-  document.body.classList.add('wmode');
-  const P=PLAN[S.day],e=P.ex[S.i],dn=S.done[S.i],ns=SETS(e),w=ls.get('w:'+e.n,''),A=ANIM[e.n],fb=ls.get('fb:'+e.n,null),hid=ls.get('hideAnim',false);
-  const prv=S.i>0&&P.ex[S.i-1].ss?P.ex[S.i-1]:null;
-  const key=S.day+S.i;if(key!==animKey){animKey=key;animT0=performance.now()}
-  let note='';
-  if(dn===0&&e.wu)note=`<div class="note wu">Разминка: ${e.wu}</div>`;
-  else if(DL())note='<div class="note fbk">Разгрузка: вес тот же, остановись за 3 повтора до отказа</div>';
-  else if(dn<=1&&fb)note=`<div class="note fbk">${FB[fb]}</div>`;
-  else if(dn===ns-1)note=`<div class="note fail">${e.f?'Последний подход: до отказа + 3–5 частичных повторов в растянутой части':'Последний подход: остановись за 1–2 повтора до отказа, не раньше'}${e.xl?'. Потом ещё 1 подход только левой':''}</div>`;
-  const tags=[];
-  if(e.u)tags.push('Сначала левая, правая — столько же');
-  if(e.ss)tags.push('Суперсет → сразу '+P.ex[S.i+1].n.toLowerCase());
-  if(prv)tags.push('Суперсет с: '+prv.n.toLowerCase());
-  let h='<div class="wk">';
-  h+=`<div class="top"><button onclick="home()">‹ Меню</button><span class="muted">${P.name}${DL()?' · разгрузка':''} · <span id="el"></span></span><button onclick="finish(false)">Завершить</button></div>`;
-  h+='<div class="dots">'+P.ex.map((x,k)=>`<button class="dot ${S.done[k]>=SETS(x)?'done':''} ${k===S.i?'cur':''}" onclick="go(${k})">${k+1}</button>`).join('')+'</div>';
-  h+=`<div><div class="title">${e.n}</div><div class="goal">Для: ${e.g}</div></div>`;
-  if(A&&!hid)h+=`<div class="anim"><svg id="animg" viewBox="80 18 220 252" preserveAspectRatio="xMidYMid meet"></svg><div class="ph" id="animtxt"></div><div class="cues">${A.cues}</div><div class="tipline">${e.t}</div></div>`;
-  else h+=`<div class="anim"><div class="tipbig">${e.t}</div>${A?`<div class="cues">${A.cues}</div>`:''}</div>`;
-  h+=`<div class="info"><div><div class="set" ${dn>=ns?'style="color:#4caf50"':''}>${dn>=ns?'Готово ✓':`Подход ${dn+1}/${ns}`}</div>${tags.length?`<div class="uni">${tags.join('<br>')}</div>`:''}</div><div class="meta"><b>${e.r} повторов</b><span>запас ${DL()?'3':e.rir} · ${e.ss?'без отдыха':'отдых '+fmt(e.rest)}</span></div></div>`;
-  h+=note;
-  h+=`<div class="tools"><label class="wt"><input type="number" inputmode="decimal" placeholder="вес" value="${w}" onchange="saveW(this.value)"><span>кг</span></label><a class="tb" href="https://www.youtube.com/results?search_query=${encodeURIComponent(e.n+' техника')}" target="_blank" rel="noopener">▶ Видео</a>${A?`<button class="tb" onclick="toggleAnim()">${hid?'Анимация':'Скрыть'}</button>`:''}</div>`;
-  h+=`<div class="act"><button class="nav" onclick="go(S.i-1)">‹</button>${dn>=ns?'<button class="primary" onclick="nextEx()">Следующее упражнение</button>':'<button class="primary" onclick="setDone()">Подход выполнен ✓</button>'}<button class="nav" onclick="go(S.i+1)">›</button></div>`;
-  h+='</div>';
-  $('app').innerHTML=h;tick();
-}
-function saveW(v){ls.set('w:'+PLAN[S.day].ex[S.i].n,v)}
-function go(k){if(k<0||k>=PLAN[S.day].ex.length)return;S.i=k;save();render()}
-function nextIdx(){const P=PLAN[S.day],n=P.ex.length;for(let k=1;k<=n;k++){const j=(S.i+k)%n;if(S.done[j]<SETS(P.ex[j]))return j}return -1}
-function nextEx(){const n=nextIdx();n<0?finish(true):go(n)}
+// Камера и кнопки
+const VIEWS={side:[3.8,1.1,-0.1],front:[0,1.2,3.6],q:[2.7,1.7,2.4]};
+function setView(v){cam.position.set(...VIEWS[v]);ctl.update();document.querySelectorAll('[data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v===v))}
+document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>setView(b.dataset.v));
+let paused=false;document.getElementById('pp').onclick=e=>{paused=!paused;e.target.textContent=paused?'Пуск':'Пауза'};
+setView('q');
+function resize(){const w=innerWidth,h=innerHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()}
+addEventListener('resize',resize);resize();
 
-function setDone(){
-  const P=PLAN[S.day],i=S.i,e=P.ex[i];
-  S.done[i]++;
-  if(S.done[i]>=SETS(e))S.rq.push(e.n);
-  if(nextIdx()<0&&S.done[i]>=SETS(e)){save();finish(true);return}
-  if(e.ss&&P.ex[i+1]&&S.done[i+1]<SETS(P.ex[i+1])){S.i=i+1;save();render();return}
-  const pr=i>0&&P.ex[i-1].ss?i-1:-1;
-  let label;
-  if(pr>=0&&S.done[pr]<SETS(P.ex[pr])){S.i=pr;label=`Дальше: суперсет — ${P.ex[pr].n}, подход ${S.done[pr]+1}`}
-  else if(S.done[i]>=SETS(e)){const n=nextIdx();S.i=n;label=`Дальше: ${P.ex[n].n}, подход ${S.done[n]+1}`}
-  else label=`Дальше: подход ${S.done[i]+1} из ${SETS(e)}`;
-  S.restEnd=Date.now()+e.rest*1000;S.beeped=false;S.label=label;restMode=null;
-  save();render();
+const ease=x=>x*x*(3-2*x),tot=PH.reduce((a,x)=>a+x[0],0),phEl=document.getElementById('ph');
+let t=0,last=performance.now();
+function loop(now){
+  requestAnimationFrame(loop);
+  const dt=Math.min((now-last)/1000,0.1);last=now;if(!paused)t+=dt;
+  let x=t%tot,f,txt;
+  if(x<PH[0][0]){f=ease(x/PH[0][0]);txt=PH[0][1]}
+  else if((x-=PH[0][0])<PH[1][0]){f=1;txt=PH[1][1]}
+  else if((x-=PH[1][0])<PH[2][0]){f=1-ease(x/PH[2][0]);txt=PH[2][1]}
+  else{f=0;txt=PH[3][1]}
+  if(phEl.textContent!==txt)phEl.textContent=txt;
+  update(f);ctl.update();R.render(scene,cam);
 }
-function rate(v){const n=S.rq.shift();if(n)ls.set('fb:'+n,v);save();restMode=null;tick()}
-
-let restMode=null;
-function tick(){
-  if(!S)return;
-  const el=$('el');if(el)el.textContent=fmt((Date.now()-S.t0)/1000);
-  const r=$('rest');
-  if(!S.restEnd){r.className='';restMode=null;return}
-  const rem=(S.restEnd-Date.now())/1000,over=rem<=0;
-  if(over&&!S.beeped){S.beeped=true;save();if(rem>-60)beep()}
-  const mode=(over?'over':'run')+S.rq.length;
-  if(mode!==restMode){
-    restMode=mode;r.className='on'+(over?' over':'');
-    let h=`<div style="font-size:22px;color:#ddd">${over?'Отдых окончен — пора!':'Отдых'}</div><div class="clock" id="rC"></div><div style="font-size:19px;margin-bottom:24px">${S.label}</div>`;
-    if(S.rq.length)h+=`<div style="width:100%;margin-bottom:22px"><div style="color:#bbb;font-size:15px;margin-bottom:8px">Как прошло «${S.rq[0]}»?</div><div class="row"><button onclick="rate(1)">Легко</button><button onclick="rate(2)">Норм</button><button onclick="rate(3)">Тяжело</button></div></div>`;
-    h+=over?'<button class="primary" onclick="endRest()">Погнали</button>':'<div class="row" style="width:100%"><button onclick="adj(-15)">−15 с</button><button onclick="adj(15)">+15 с</button></div><button style="margin-top:10px" onclick="endRest()">Пропустить</button>';
-    r.innerHTML=h;
-  }
-  $('rC').textContent=over?'+'+fmt(-rem):fmt(rem);
-}
-function adj(d){S.restEnd=Math.max(Date.now(),S.restEnd+d*1000);save();restMode=null;tick()}
-function endRest(){S.restEnd=null;S.rq=[];save();tick();render()}
-setInterval(tick,250);
-
-function finish(auto){
-  if(!auto&&!confirm('Завершить тренировку?'))return;
-  const P=PLAN[S.day],total=P.ex.reduce((a,e)=>a+SETS(e),0),done=S.done.reduce((a,x)=>a+x,0),min=Math.round((Date.now()-S.t0)/60000),wasDL=DL();
-  if(done>0){
-    const h=ls.get('hist',[]);h.push({day:S.day,date:new Date().toISOString(),min,done,total,dl:wasDL});ls.set('hist',h.slice(-100));
-    if(wasDL){const c=ls.get('dlc',0)+1;if(c>=3){ls.set('deload',false);ls.set('dlc',0);ls.set('dlAt',Math.min(h.length,100))}else ls.set('dlc',c)}
-  }
-  S=null;save();
-  if(wl){wl.release();wl=null}
-  document.body.classList.remove('wmode');
-  $('rest').className='';restMode=null;
-  $('app').innerHTML=`<h1>Готово!</h1><div class="card"><div class="ex">${P.name}</div><div>Подходов: ${done} из ${total}</div><div>Время: ${min} мин</div>${wasDL&&!DL()?'<div style="margin-top:8px;color:#8cc4ff">Неделя разгрузки завершена — со следующей тренировки обычный режим</div>':''}</div><button class="primary" onclick="home()">В меню</button>`;
-}
-
-S?openW():home();
+window.__ok=true;
+requestAnimationFrame(loop);
 </script>
 </body>
 </html>
